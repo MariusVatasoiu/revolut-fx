@@ -1,6 +1,6 @@
 import { Component, ChangeEvent } from "react";
-import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { connect } from "react-redux";
 import { setExchangeAccount } from "../actions/exchange";
 import type { Account, RootState, AccountType } from "../interfaces";
 

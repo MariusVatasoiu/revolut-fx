@@ -9,7 +9,7 @@ export interface RootState {
   exchange: {
     firstAccount: string;
     secondAccount: string;
-    exchangeAction: string;
+    exchangeAction: ExchangeAction;
   };
 }
 
