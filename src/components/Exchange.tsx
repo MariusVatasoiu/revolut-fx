@@ -1,22 +1,68 @@
-import { Component } from "react";
+import { Component, MouseEvent } from "react";
 import type { ThunkDispatch } from "redux-thunk";
 import { connect } from "react-redux";
 import AccountSelector from "./AccountSelector";
 import ActionSelector from "./ActionSelector";
 import Amount from "./Amount";
-import type { RootState, ExchangeType } from "../interfaces";
-import { setExchangeAction, handleExchangeRate } from "../actions/exchange";
+import type { RootState, ExchangeState } from "../interfaces";
+import {
+  setExchangeAction,
+  handleExchangeRate,
+  resetExchangeForm,
+} from "../actions/exchange";
+import { updateAccountAmount } from "../actions/accounts";
 import { titleCase } from "../utils/helpers";
 
 interface Props {
   first: string;
   second: string;
-  exchange: ExchangeType;
+  exchange: ExchangeState;
   dispatch: ThunkDispatch<any, any, any>;
 }
 
 class Exchange extends Component<Props> {
   state = { timer: undefined };
+
+  canContinue = () => {
+    const { firstAmount, secondAmount, firstAmountError, secondAmountError } =
+      this.props.exchange;
+
+    return (
+      firstAmount && secondAmount && !firstAmountError && !secondAmountError
+    );
+  };
+
+  handleExchange = (event: MouseEvent) => {
+    console.log("DO Exchange");
+    if (!this.canContinue()) return;
+
+    const { dispatch } = this.props;
+    const {
+      firstAccount,
+      secondAccount,
+      firstAmount,
+      secondAmount,
+      exchangeAction,
+    } = this.props.exchange;
+
+    dispatch(
+      updateAccountAmount({
+        account: firstAccount,
+        amount: Number(firstAmount),
+        exchangeAction,
+      })
+    );
+
+    dispatch(
+      updateAccountAmount({
+        account: secondAccount,
+        amount: Number(secondAmount),
+        exchangeAction: exchangeAction === "sell" ? "buy" : "sell",
+      })
+    );
+
+    dispatch(resetExchangeForm());
+  };
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -36,15 +82,6 @@ class Exchange extends Component<Props> {
       clearInterval(timer);
     }
   }
-
-  canContinue = () => {
-    const { firstAmount, secondAmount, firstAmountError, secondAmountError } =
-      this.props.exchange;
-
-    return (
-      firstAmount && secondAmount && !firstAmountError && !secondAmountError
-    );
-  };
 
   render() {
     console.log(this.props);
@@ -78,7 +115,7 @@ class Exchange extends Component<Props> {
           />
         </section>
 
-        <button disabled={!this.canContinue()}>
+        <button onClick={this.handleExchange} disabled={!this.canContinue()}>
           {titleCase(exchange.exchangeAction)} {exchange.firstAccount}
           {exchange.exchangeAction === "sell" ? " to " : " with "}
           {exchange.secondAccount}

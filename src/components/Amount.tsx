@@ -11,14 +11,14 @@ import type {
   Account,
   ExchangeAmountType,
   RootState,
-  ExchangeType,
+  ExchangeState,
 } from "../interfaces";
 
 interface Props {
   account: Account;
   action: string;
   amountType: ExchangeAmountType;
-  exchange: ExchangeType;
+  exchange: ExchangeState;
   dispatch: ThunkDispatch<any, any, any>;
 }
 
@@ -31,8 +31,8 @@ class Amount extends Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     const { value } = this.state;
-    const { amountType, exchange, dispatch } = this.props;
-    console.log("MMMMMM", amountType, exchange.exchangeLastUpdated);
+    const { amountType, dispatch } = this.props;
+
     if (this.props.action !== prevProps.action) {
       this.setState((state: State) => ({
         value: this.formatAmount(state.value),
@@ -46,7 +46,11 @@ class Amount extends Component<Props> {
         value: this.formatAmount(this.props.exchange[amountType]),
       }));
 
-      this.validateAmount(this.getNumericAmount(value));
+      this.validateAmount(
+        this.getNumericAmount(
+          this.formatAmount(this.props.exchange[amountType])
+        )
+      );
     }
 
     if (

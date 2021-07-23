@@ -4,9 +4,13 @@ export interface Account {
   label: string;
 }
 
+export interface AccountsState {
+  [key: string]: Account;
+}
+
 export interface RootState {
-  accounts: { [key: string]: Account };
-  exchange: ExchangeType;
+  accounts: AccountsState;
+  exchange: ExchangeState;
 }
 
 export type AccountType = "firstAccount" | "secondAccount";
@@ -18,7 +22,7 @@ export interface ExchangeAccount {
 
 export type ExchangeAction = "sell" | "buy";
 
-export interface ExchangeType {
+export interface ExchangeState {
   firstAccount: string;
   firstAmount: ExchangeAmountType;
   firstAmountError: boolean;
@@ -42,4 +46,10 @@ export type ExchangeErrorType = "firstAmountError" | "secondAmountError";
 export interface ExchangeError {
   errorType: ExchangeErrorType;
   errorValue: boolean;
+}
+
+export interface UpdateAccountAmount {
+  account: string;
+  amount: number;
+  exchangeAction: "sell" | "buy";
 }
