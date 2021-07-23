@@ -35,7 +35,6 @@ class Exchange extends Component<Props> {
   };
 
   handleExchange = (event: MouseEvent) => {
-    console.log("DO Exchange");
     if (!this.canContinue()) return;
 
     const { dispatch } = this.props;
@@ -88,7 +87,6 @@ class Exchange extends Component<Props> {
   }
 
   render() {
-    console.log(this.props);
     const { first, second, exchange } = this.props;
 
     if (!first || !second) {
@@ -131,7 +129,7 @@ class Exchange extends Component<Props> {
 
 const mapStateToProps = ({ accounts, exchange }: RootState) => {
   const [first, second] = Object.values(accounts);
-  console.log("EXCHNAGE", exchange);
+
   return {
     first: first?.code,
     second: second?.code,
