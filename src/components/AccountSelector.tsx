@@ -16,7 +16,7 @@ interface Props {
   dispatch: ThunkDispatch<any, any, any>;
 }
 
-class AccountSelector extends Component<Props> {
+export class AccountSelector extends Component<Props> {
   state = { value: this.props.initialAccount.code };
 
   handleChange = (event: ChangeEvent<HTMLSelectElement>): void => {
@@ -48,14 +48,21 @@ class AccountSelector extends Component<Props> {
 
     return (
       <div style={{ backgroundColor: "#ffcfcf", display: "inline-block" }}>
-        <select value={value} onChange={this.handleChange}>
+        <select
+          value={value}
+          onChange={this.handleChange}
+          data-testid="account-selector"
+        >
           {Object.values(accounts).map((account: Account) => (
             <option key={account.code} value={account.code}>
               {account.label} - {account.balance}
             </option>
           ))}
         </select>
-        <p>Balance: {selectedAccount?.balance || initialAccount?.balance}</p>
+        <p>
+          Balance: {selectedAccount?.symbol || initialAccount?.symbol}
+          {selectedAccount?.balance || initialAccount?.balance}
+        </p>
       </div>
     );
   }

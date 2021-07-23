@@ -2,6 +2,7 @@ export interface Account {
   code: string;
   balance: number;
   label: string;
+  symbol: string;
 }
 
 export interface AccountsState {

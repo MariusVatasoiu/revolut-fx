@@ -26,7 +26,7 @@ interface State {
   value: string;
 }
 
-class Amount extends Component<Props> {
+export class Amount extends Component<Props> {
   state = { value: "", hasError: false };
 
   componentDidUpdate(prevProps: Props) {
@@ -156,8 +156,13 @@ class Amount extends Component<Props> {
           value={value}
           onChange={this.handleChange}
           placeholder="0"
+          data-testid="amount-input"
         />
-        {hasError && <p className="error">exceed balance</p>}
+        {hasError && (
+          <p className="error" data-testid="amount-error">
+            exceed balance
+          </p>
+        )}
       </div>
     );
   }
