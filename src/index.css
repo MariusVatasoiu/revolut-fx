@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -10,4 +10,18 @@ body {
 .app {
   max-width: 1000px;
   margin: 0 auto;
+}
+
+.container-account {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid red;
+}
+
+.amount-input {
+  text-align: right;
+}
+
+.error {
+  color: red;
 }

@@ -26,14 +26,19 @@ class AccountSelector extends Component<Props> {
     );
   };
 
+  componentDidMount() {
+    const { value } = this.state;
+    const { accountType, dispatch } = this.props;
+
+    dispatch(setExchangeAccount({ accountType, accountCode: value }));
+  }
+
   render() {
     const { accounts, initialAccount, selectedAccount } = this.props;
     const { value } = this.state;
 
-    console.log(accounts, initialAccount);
-
     return (
-      <div style={{ backgroundColor: "#ffcfcf" }}>
+      <div style={{ backgroundColor: "#ffcfcf", display: "inline-block" }}>
         <select value={value} onChange={this.handleChange}>
           {Object.values(accounts).map((account: Account) => (
             <option key={account.code} value={account.code}>
@@ -51,7 +56,6 @@ const mapStateToProps = (
   { accounts, exchange }: RootState,
   { selected, accountType }: { selected: string; accountType: AccountType }
 ) => {
-  console.log("SELECTED", selected);
   return {
     accounts,
     initialAccount: accounts[selected],
