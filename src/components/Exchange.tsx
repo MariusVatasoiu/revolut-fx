@@ -6,6 +6,7 @@ import ActionSelector from "./ActionSelector";
 import Amount from "./Amount";
 import type { RootState, ExchangeType } from "../interfaces";
 import { setExchangeAction, handleExchangeRate } from "../actions/exchange";
+import { titleCase } from "../utils/helpers";
 
 interface Props {
   first: string;
@@ -56,7 +57,7 @@ class Exchange extends Component<Props> {
     return (
       <div>
         <h1>
-          {exchange.exchangeAction} {exchange.firstAccount}
+          {titleCase(exchange.exchangeAction)} {exchange.firstAccount}
         </h1>
         <p>
           1 {exchange.firstAccount} = {exchange.exchangeRate}{" "}
@@ -78,7 +79,7 @@ class Exchange extends Component<Props> {
         </section>
 
         <button disabled={!this.canContinue()}>
-          {exchange.exchangeAction} {exchange.firstAccount}
+          {titleCase(exchange.exchangeAction)} {exchange.firstAccount}
           {exchange.exchangeAction === "sell" ? " to " : " with "}
           {exchange.secondAccount}
         </button>
