@@ -73,8 +73,8 @@ export function handleExchangeRate() {
       .then((rate) => {
         dispatch(setExchangeRate(rate));
       })
-      .catch(() => {
-        console.warn("Something went wrong.");
+      .catch((e) => {
+        console.log("Something went wrong.", e);
       });
   };
 }

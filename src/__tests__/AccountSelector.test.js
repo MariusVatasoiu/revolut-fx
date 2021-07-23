@@ -1,14 +1,9 @@
 import { expect, test } from "@jest/globals";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { AccountSelector } from "../components/AccountSelector";
+import { accountsMock } from "../mocks/data";
 
-const accounts = {
-  TEST1: { code: "TEST1", balance: 12, label: "TEST1", symbol: "test1" },
-  TEST2: { code: "TEST2", balance: 5, label: "TEST2", symbol: "test2" },
-  TEST3: { code: "TEST3", balance: 7, label: "TEST3", symbol: "test3" },
-};
-
-const initialAccount = accounts.TEST1;
+const initialAccount = accountsMock.TEST1;
 
 test("should render all accounts", async () => {
   const mockDispatch = jest.fn();
@@ -16,7 +11,7 @@ test("should render all accounts", async () => {
   render(
     <AccountSelector
       dispatch={mockDispatch}
-      accounts={accounts}
+      accounts={accountsMock}
       initialAccount={initialAccount}
     />
   );
@@ -34,7 +29,7 @@ test("should update the store when mounted", async () => {
   render(
     <AccountSelector
       dispatch={mockDispatch}
-      accounts={accounts}
+      accounts={accountsMock}
       initialAccount={initialAccount}
     />
   );
@@ -46,12 +41,12 @@ test("should update the store when account is changed", async () => {
   render(
     <AccountSelector
       dispatch={mockDispatch}
-      accounts={accounts}
+      accounts={accountsMock}
       initialAccount={initialAccount}
     />
   );
 
   const select = screen.getByTestId("account-selector");
-  fireEvent.change(select, { target: { value: accounts.TEST2.code } });
+  fireEvent.change(select, { target: { value: accountsMock.TEST2.code } });
   expect(mockDispatch).toHaveBeenCalledTimes(4);
 });

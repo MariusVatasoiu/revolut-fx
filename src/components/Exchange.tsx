@@ -13,6 +13,7 @@ import {
 import { updateAccountAmount } from "../actions/accounts";
 import { titleCase } from "../utils/helpers";
 
+// Added only to limit the requests during development
 const ENABLE_POLLING = false;
 
 interface Props {
@@ -22,7 +23,7 @@ interface Props {
   dispatch: ThunkDispatch<any, any, any>;
 }
 
-class Exchange extends Component<Props> {
+export class Exchange extends Component<Props> {
   state = { timer: undefined };
 
   canContinue = () => {
@@ -74,7 +75,7 @@ class Exchange extends Component<Props> {
 
     const timer = setInterval(() => {
       dispatch(handleExchangeRate());
-    }, 1000000); // should be 10000, but I increased it to save reqs from free account
+    }, 1000000); // should be 10000, but I increased it to save reqs for free account
     this.setState({ timer });
   }
 
@@ -117,7 +118,11 @@ class Exchange extends Component<Props> {
           />
         </section>
 
-        <button onClick={this.handleExchange} disabled={!this.canContinue()}>
+        <button
+          onClick={this.handleExchange}
+          disabled={!this.canContinue()}
+          data-testid="exchange-btn"
+        >
           {titleCase(exchange.exchangeAction)} {exchange.firstAccount}
           {exchange.exchangeAction === "sell" ? " to " : " with "}
           {exchange.secondAccount}

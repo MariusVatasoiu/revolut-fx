@@ -17,7 +17,7 @@ interface Props {
 }
 
 export class AccountSelector extends Component<Props> {
-  state = { value: this.props.initialAccount.code };
+  state = { value: this.props.initialAccount?.code };
 
   handleChange = (event: ChangeEvent<HTMLSelectElement>): void => {
     const { dispatch } = this.props;

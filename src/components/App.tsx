@@ -1,10 +1,9 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
+import type { ThunkDispatch } from "redux-thunk";
 
-import "./App.css";
-import Exchange from "./components/Exchange";
-import { handleInitialData } from "./actions/shared";
+import Exchange from "./Exchange";
+import { handleInitialData } from "../actions/shared";
 
 interface Props {
   dispatch: ThunkDispatch<any, any, any>;

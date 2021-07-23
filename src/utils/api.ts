@@ -16,5 +16,7 @@ export function getRateAPI(from: string, to: string) {
     `https://v6.exchangerate-api.com/v6/${API_KEY}/pair/${from}/${to}`
   )
     .then((response) => response.json())
-    .then((data) => data.conversion_rate);
+    .then((data) => {
+      return data.conversion_rate;
+    });
 }
