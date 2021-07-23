@@ -13,6 +13,8 @@ import {
 import { updateAccountAmount } from "../actions/accounts";
 import { titleCase } from "../utils/helpers";
 
+const ENABLE_POLLING = false;
+
 interface Props {
   first: string;
   second: string;
@@ -69,10 +71,12 @@ class Exchange extends Component<Props> {
 
     dispatch(setExchangeAction("sell"));
 
-    // const timer = setInterval(() => {
-    //   dispatch(handleExchangeRate());
-    // }, 1000000); // should be 10000, but I increased it to save reqs from free account
-    // this.setState({ timer });
+    if (!ENABLE_POLLING) return;
+
+    const timer = setInterval(() => {
+      dispatch(handleExchangeRate());
+    }, 1000000); // should be 10000, but I increased it to save reqs from free account
+    this.setState({ timer });
   }
 
   componentWillUnmount() {
