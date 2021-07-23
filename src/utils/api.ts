@@ -7,3 +7,14 @@ export function getAccountsAPI() {
 
   return Promise.resolve(accounts);
 }
+
+export function getRateAPI(from: string, to: string) {
+  if (!from || !to) return Promise.reject();
+
+  const API_KEY = "f09c043971970998988b752b";
+  return fetch(
+    `https://v6.exchangerate-api.com/v6/${API_KEY}/pair/${from}/${to}`
+  )
+    .then((response) => response.json())
+    .then((data) => data.conversion_rate);
+}

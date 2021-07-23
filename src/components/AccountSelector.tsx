@@ -1,7 +1,11 @@
 import { Component, ChangeEvent } from "react";
-import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { setExchangeAccount } from "../actions/exchange";
+import {
+  setExchangeAccount,
+  resetExchangeForm,
+  handleExchangeRate,
+} from "../actions/exchange";
+import type { ThunkDispatch } from "redux-thunk";
 import type { Account, RootState, AccountType } from "../interfaces";
 
 interface Props {
@@ -9,21 +13,26 @@ interface Props {
   selectedAccount: Account;
   accounts: { [key: string]: Account };
   accountType: "firstAccount" | "secondAccount";
-  dispatch: Dispatch;
+  dispatch: ThunkDispatch<any, any, any>;
 }
 
 class AccountSelector extends Component<Props> {
   state = { value: this.props.initialAccount.code };
 
   handleChange = (event: ChangeEvent<HTMLSelectElement>): void => {
+    const { dispatch } = this.props;
     this.setState({ value: event.target.value });
 
-    this.props.dispatch(
+    dispatch(
       setExchangeAccount({
         accountType: this.props.accountType,
         accountCode: event.target.value,
       })
     );
+
+    dispatch(resetExchangeForm());
+
+    dispatch(handleExchangeRate());
   };
 
   componentDidMount() {

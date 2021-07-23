@@ -1,11 +1,11 @@
 import { Component, MouseEvent } from "react";
-import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { RootState, ExchangeAction } from "../interfaces";
-import { setExchangeAction } from "../actions/exchange";
+import { setExchangeAction, handleExchangeRate } from "../actions/exchange";
+import type { ThunkDispatch } from "redux-thunk";
 
 interface Props {
-  dispatch: Dispatch;
+  dispatch: ThunkDispatch<any, any, any>;
   exchangeAction: ExchangeAction;
 }
 
@@ -15,6 +15,7 @@ class ActionSelector extends Component<Props> {
 
     const { dispatch, exchangeAction } = this.props;
     dispatch(setExchangeAction(exchangeAction === "sell" ? "buy" : "sell"));
+    dispatch(handleExchangeRate());
   };
 
   render() {

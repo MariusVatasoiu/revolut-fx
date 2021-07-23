@@ -1,32 +1,44 @@
 import { Component } from "react";
-import type { Dispatch } from "redux";
+import type { ThunkDispatch } from "redux-thunk";
 import { connect } from "react-redux";
 import AccountSelector from "./AccountSelector";
 import ActionSelector from "./ActionSelector";
 import Amount from "./Amount";
 import type { RootState, ExchangeType } from "../interfaces";
-import { setExchangeAction, setExchangeRate } from "../actions/exchange";
+import { setExchangeAction, handleExchangeRate } from "../actions/exchange";
 
 interface Props {
   first: string;
   second: string;
   exchange: ExchangeType;
-  dispatch: Dispatch;
+  dispatch: ThunkDispatch<any, any, any>;
 }
 
 class Exchange extends Component<Props> {
+  state = { timer: undefined };
+
   componentDidMount() {
     const { dispatch } = this.props;
 
     dispatch(setExchangeAction("sell"));
-    dispatch(setExchangeRate(2));
+
+    // const timer = setInterval(() => {
+    //   dispatch(handleExchangeRate());
+    // }, 1000000); // should be 10000, but I increased it to save reqs from free account
+    // this.setState({ timer });
+  }
+
+  componentWillUnmount() {
+    const { timer } = this.state;
+
+    if (timer) {
+      clearInterval(timer);
+    }
   }
 
   canContinue = () => {
     const { firstAmount, secondAmount, firstAmountError, secondAmountError } =
       this.props.exchange;
-
-    console.log(firstAmount, secondAmount, firstAmountError, secondAmountError);
 
     return (
       firstAmount && secondAmount && !firstAmountError && !secondAmountError
@@ -46,6 +58,10 @@ class Exchange extends Component<Props> {
         <h1>
           {exchange.exchangeAction} {exchange.firstAccount}
         </h1>
+        <p>
+          1 {exchange.firstAccount} = {exchange.exchangeRate}{" "}
+          {exchange.secondAccount}
+        </p>
         <section className="container-account">
           <AccountSelector selected={first} accountType="firstAccount" />
           <Amount action={exchange.exchangeAction} amountType="firstAmount" />
@@ -62,7 +78,8 @@ class Exchange extends Component<Props> {
         </section>
 
         <button disabled={!this.canContinue()}>
-          {exchange.exchangeAction} {exchange.firstAccount} to{" "}
+          {exchange.exchangeAction} {exchange.firstAccount}
+          {exchange.exchangeAction === "sell" ? " to " : " with "}
           {exchange.secondAccount}
         </button>
       </div>

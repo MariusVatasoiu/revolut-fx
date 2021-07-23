@@ -4,12 +4,15 @@ import {
   SET_EXCHANGE_AMOUNT,
   SET_EXCHANGE_RATE,
   SET_EXCHANGE_ERROR,
+  RESET_EXCHANGE_FORM,
+  SET_EXCHANGE_LAST_UPDATED,
 } from "../actions/exchange";
 import type {
   ExchangeAccount,
   ExchangeAction,
   ExchangeAmount,
   ExchangeError,
+  ExchangeAmountType,
 } from "../interfaces";
 
 interface SetExchangeAccount {
@@ -32,6 +35,11 @@ interface SetExchangeRate {
   exchangeRate: number;
 }
 
+interface SetExchangeLastUpdated {
+  type: string;
+  exchangeLastUpdated: ExchangeAmountType;
+}
+
 interface SetExchangeError {
   type: string;
   exchangeError: ExchangeError;
@@ -45,6 +53,7 @@ export default function exchange(
     | SetExchangeAmount
     | SetExchangeRate
     | SetExchangeError
+    | SetExchangeLastUpdated
 ) {
   switch (action.type) {
     case SET_EXCHANGE_ACCOUNT:
@@ -64,13 +73,16 @@ export default function exchange(
         .exchangeAmount;
       const calculatedAmountType =
         amountType === "firstAmount" ? "secondAmount" : "firstAmount";
-      const calculatedAmountValue: number =
+      const calculatedAmountTemp: number =
         Number(amountValue) * (state as { exchangeRate: number }).exchangeRate;
+      const calculatedAmountValue = !calculatedAmountTemp
+        ? ""
+        : calculatedAmountTemp.toFixed(2);
 
       return {
         ...state,
         [amountType]: amountValue,
-        [calculatedAmountType]: String(calculatedAmountValue || ""),
+        [calculatedAmountType]: calculatedAmountValue,
       };
     case SET_EXCHANGE_RATE:
       return {
@@ -83,6 +95,18 @@ export default function exchange(
       return {
         ...state,
         [errorType]: errorValue,
+      };
+    case SET_EXCHANGE_LAST_UPDATED:
+      return {
+        ...state,
+        exchangeLastUpdated: (action as SetExchangeLastUpdated)
+          .exchangeLastUpdated,
+      };
+    case RESET_EXCHANGE_FORM:
+      return {
+        ...state,
+        firstAmount: "",
+        secondAmount: "",
       };
     default:
       return state;

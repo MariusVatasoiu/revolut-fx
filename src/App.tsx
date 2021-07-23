@@ -6,13 +6,6 @@ import "./App.css";
 import Exchange from "./components/Exchange";
 import { handleInitialData } from "./actions/shared";
 
-// const API_KEY = "f09c043971970998988b752b";
-// fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`, {
-//   // mode: "no-cors",
-// })
-//   .then((response) => response.json())
-//   .then((res) => console.log(res));
-
 interface Props {
   dispatch: ThunkDispatch<any, any, any>;
 }

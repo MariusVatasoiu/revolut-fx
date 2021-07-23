@@ -1,7 +1,12 @@
 import { ChangeEvent, Component } from "react";
 import { connect } from "react-redux";
-import { setExchangeAmount, setExchangeError } from "../actions/exchange";
-import type { Dispatch } from "redux";
+import {
+  setExchangeAmount,
+  setExchangeError,
+  setExchangeLastUpdated,
+  handleExchangeRate,
+} from "../actions/exchange";
+import type { ThunkDispatch } from "redux-thunk";
 import type {
   Account,
   ExchangeAmountType,
@@ -14,7 +19,7 @@ interface Props {
   action: string;
   amountType: ExchangeAmountType;
   exchange: ExchangeType;
-  dispatch: Dispatch;
+  dispatch: ThunkDispatch<any, any, any>;
 }
 
 interface State {
@@ -26,8 +31,8 @@ class Amount extends Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     const { value } = this.state;
-    const { amountType } = this.props;
-
+    const { amountType, exchange, dispatch } = this.props;
+    console.log("MMMMMM", amountType, exchange.exchangeLastUpdated);
     if (this.props.action !== prevProps.action) {
       this.setState((state: State) => ({
         value: this.formatAmount(state.value),
@@ -43,6 +48,22 @@ class Amount extends Component<Props> {
 
       this.validateAmount(this.getNumericAmount(value));
     }
+
+    if (
+      this.props.exchange.exchangeRate !== prevProps.exchange.exchangeRate &&
+      amountType === this.props.exchange.exchangeLastUpdated
+    ) {
+      dispatch(
+        setExchangeAmount({
+          amountType,
+          amountValue: this.getNumericAmount(value),
+        })
+      );
+    }
+
+    if (this.props.account !== prevProps.account) {
+      dispatch(handleExchangeRate());
+    }
   }
 
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +78,8 @@ class Amount extends Component<Props> {
         amountValue: this.getNumericAmount(value),
       })
     );
+
+    dispatch(setExchangeLastUpdated(amountType));
 
     this.setState({ value: this.formatAmount(value) });
   };
@@ -95,9 +118,18 @@ class Amount extends Component<Props> {
     const sign = action === "sell" ? "-" : "+";
 
     const numericAmount = this.getNumericAmount(value);
+    const onlyNumbers = numericAmount.replace(/[^.0-9]/g, "");
+
+    let numberFormatted = onlyNumbers;
+
+    // check if it has a dot
+    if (onlyNumbers.includes(".")) {
+      const [integer, decimals] = onlyNumbers.split(".");
+      numberFormatted = `${integer}.${decimals.substring(0, 2)}`;
+    }
 
     const valueFormatted =
-      numericAmount === "" ? `${numericAmount}` : `${sign} ${numericAmount}`;
+      numericAmount === "" ? `${numericAmount}` : `${sign} ${numberFormatted}`;
 
     return valueFormatted;
   };

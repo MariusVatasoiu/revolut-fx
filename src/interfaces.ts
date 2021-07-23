@@ -27,6 +27,7 @@ export interface ExchangeType {
   secondAmountError: boolean;
   exchangeAction: ExchangeAction;
   exchangeRate: number;
+  exchangeLastUpdated: ExchangeAmountType;
 }
 
 export interface ExchangeAmount {
