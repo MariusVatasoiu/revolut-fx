@@ -29,7 +29,7 @@ test("should enable button for valid data", async () => {
     </Provider>
   );
 
-  const btn = screen.getByTestId("exchange-btn");
+  const btn = screen.getByTestId("submit-btn");
   expect(btn).toBeInTheDocument();
   expect(btn).not.toHaveAttribute("disabled");
 });
@@ -51,7 +51,7 @@ test("should disable button for invalid data", async () => {
     </Provider>
   );
 
-  const btn = screen.getByTestId("exchange-btn");
+  const btn = screen.getByTestId("submit-btn");
   expect(btn).toBeInTheDocument();
   expect(btn).toHaveAttribute("disabled");
 });

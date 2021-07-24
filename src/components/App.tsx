@@ -4,6 +4,7 @@ import type { ThunkDispatch } from "redux-thunk";
 
 import Exchange from "./Exchange";
 import { handleInitialData } from "../actions/shared";
+import logo from "../assets/logo.png";
 
 interface Props {
   dispatch: ThunkDispatch<any, any, any>;
@@ -17,7 +18,9 @@ class App extends Component<Props> {
   render() {
     return (
       <div className="app">
-        <header>Revolut</header>
+        <header>
+          <img src={logo} alt="Revolut" />
+        </header>
         <Exchange />
       </div>
     );

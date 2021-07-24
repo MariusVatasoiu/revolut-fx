@@ -46,7 +46,7 @@ test("should update the store when account is changed", async () => {
     />
   );
 
-  const select = screen.getByTestId("account-selector");
+  const select = screen.getByTestId("account-select");
   fireEvent.change(select, { target: { value: accountsMock.TEST2.code } });
   expect(mockDispatch).toHaveBeenCalledTimes(4);
 });

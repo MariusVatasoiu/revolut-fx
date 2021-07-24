@@ -5,23 +5,146 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f3f4f5;
+}
+
+header {
+  padding: 20px 0;
 }
 
 .app {
-  max-width: 1000px;
+  max-width: 720px;
   margin: 0 auto;
+  padding: 0 20px;
+}
+h1 {
+  margin: 0;
 }
 
-.container-account {
+.box-container {
   display: flex;
   justify-content: space-between;
-  border: 1px solid red;
+  border: 1px solid #f5f5f5;
+  background-color: #fff;
+  box-shadow: 6px 4px 25px -5px rgb(204 204 204 / 86%);
+  border-radius: 12px;
+  padding: 6px;
+  min-height: 80px;
 }
 
+/* Rate */
+.rate {
+  font-weight: bold;
+  font-size: 12px;
+  color: #216eff;
+}
+
+/* Account */
+.account-container {
+  margin-right: 20px;
+}
+.account-select {
+  font-size: 24px;
+  font-weight: bold;
+  border: none;
+  padding: 8px 0px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.balance {
+  color: #595959;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  height: 16px;
+  padding-left: 5px;
+}
+
+/* Amount */
+.amount-container,
+.account-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .amount-input {
   text-align: right;
+  font-size: 24px;
+  font-weight: bold;
+  border: none;
+  padding: 8px 0px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.account-select:focus,
+.account-select:focus-visible,
+.amount-input:focus,
+.amount-input:focus-visible {
+  border: none;
+  outline: none;
 }
 
 .error {
   color: red;
+  margin: 0;
+  text-align: right;
+  font-weight: 500;
+  font-size: 12px;
+  height: 16px;
+}
+
+/* Action */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.action-btn {
+  background-color: #fff;
+  border: 3px solid #d3d3d3;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.action-btn:hover {
+  box-shadow: 1px 1px 11px 1px rgb(204 204 204 / 86%);
+  cursor: pointer;
+}
+
+/* Submit */
+.submit-btn {
+  width: 100%;
+  color: #fff;
+  background-color: #216eff;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px;
+}
+.submit-btn:hover {
+  background-color: #6195f7;
+  cursor: pointer;
+}
+.submit-btn:disabled {
+  background-color: #a3c3ff;
+}
+
+.mt-40 {
+  margin-top: 40px;
+}
+
+@media (min-width: 720px) {
+  .app {
+    padding: 0;
+  }
+  .submit-btn {
+    max-width: 270px;
+  }
 }

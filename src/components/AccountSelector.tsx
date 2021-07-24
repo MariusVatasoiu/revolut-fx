@@ -47,19 +47,20 @@ export class AccountSelector extends Component<Props> {
     const { value } = this.state;
 
     return (
-      <div style={{ backgroundColor: "#ffcfcf", display: "inline-block" }}>
+      <div className="account-container">
         <select
+          className="account-select"
           value={value}
           onChange={this.handleChange}
-          data-testid="account-selector"
+          data-testid="account-select"
         >
           {Object.values(accounts).map((account: Account) => (
             <option key={account.code} value={account.code}>
-              {account.label} - {account.balance}
+              {account.label} · {account.balance}
             </option>
           ))}
         </select>
-        <p>
+        <p className="balance">
           Balance: {selectedAccount?.symbol || initialAccount?.symbol}
           {selectedAccount?.balance || initialAccount?.balance}
         </p>

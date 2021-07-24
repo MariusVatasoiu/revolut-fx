@@ -12,6 +12,7 @@ import {
 } from "../actions/exchange";
 import { updateAccountAmount } from "../actions/accounts";
 import { titleCase } from "../utils/helpers";
+import { BsGraphUp } from "react-icons/bs";
 
 // Added only to limit the requests during development
 const ENABLE_POLLING = false;
@@ -95,22 +96,24 @@ export class Exchange extends Component<Props> {
     }
 
     return (
-      <div>
+      <main>
         <h1>
           {titleCase(exchange.exchangeAction)} {exchange.firstAccount}
         </h1>
-        <p>
-          1 {exchange.firstAccount} = {exchange.exchangeRate}{" "}
+        <p className="rate">
+          <BsGraphUp /> 1 {exchange.firstAccount} = {exchange.exchangeRate}{" "}
           {exchange.secondAccount}
         </p>
-        <section className="container-account">
+        <section className="box-container">
           <AccountSelector selected={first} accountType="firstAccount" />
           <Amount action={exchange.exchangeAction} amountType="firstAmount" />
         </section>
-        <hr />
-        <ActionSelector />
-        <hr />
-        <section className="container-account">
+
+        <section className="button-container">
+          <ActionSelector />
+        </section>
+
+        <section className="box-container">
           <AccountSelector selected={second} accountType="secondAccount" />
           <Amount
             action={exchange.exchangeAction === "sell" ? "buy" : "sell"}
@@ -118,16 +121,19 @@ export class Exchange extends Component<Props> {
           />
         </section>
 
-        <button
-          onClick={this.handleExchange}
-          disabled={!this.canContinue()}
-          data-testid="exchange-btn"
-        >
-          {titleCase(exchange.exchangeAction)} {exchange.firstAccount}
-          {exchange.exchangeAction === "sell" ? " to " : " with "}
-          {exchange.secondAccount}
-        </button>
-      </div>
+        <section className="button-container mt-40">
+          <button
+            className="submit-btn"
+            onClick={this.handleExchange}
+            disabled={!this.canContinue()}
+            data-testid="submit-btn"
+          >
+            {titleCase(exchange.exchangeAction)} {exchange.firstAccount}
+            {exchange.exchangeAction === "sell" ? " to " : " with "}
+            {exchange.secondAccount}
+          </button>
+        </section>
+      </main>
     );
   }
 }

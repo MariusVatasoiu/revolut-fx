@@ -23,7 +23,11 @@ export class ActionSelector extends Component<Props> {
     const { exchangeAction } = this.props;
 
     return (
-      <button onClick={this.handleClick} data-testid="action-btn">
+      <button
+        className="action-btn"
+        onClick={this.handleClick}
+        data-testid="action-btn"
+      >
         {exchangeAction === "sell" && <FaArrowDown data-testid="arrow-down" />}
         {exchangeAction === "buy" && <FaArrowUp data-testid="arrow-up" />}
       </button>

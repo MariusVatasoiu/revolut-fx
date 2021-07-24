@@ -149,7 +149,7 @@ export class Amount extends Component<Props> {
   render() {
     const { value, hasError } = this.state;
     return (
-      <div style={{ display: "inline-block", backgroundColor: "#c7eac7" }}>
+      <div className="amount-container">
         <input
           type="text"
           className="amount-input"
@@ -158,11 +158,10 @@ export class Amount extends Component<Props> {
           placeholder="0"
           data-testid="amount-input"
         />
-        {hasError && (
-          <p className="error" data-testid="amount-error">
-            exceed balance
-          </p>
-        )}
+
+        <p className="error">
+          {hasError && <span data-testid="amount-error">exceed balance</span>}
+        </p>
       </div>
     );
   }
