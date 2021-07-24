@@ -28,7 +28,7 @@ h1 {
   background-color: #fff;
   box-shadow: 6px 4px 25px -5px rgb(204 204 204 / 86%);
   border-radius: 12px;
-  padding: 6px;
+  padding: 6px 12px;
   min-height: 80px;
 }
 
