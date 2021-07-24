@@ -15,7 +15,7 @@ import { titleCase } from "../utils/helpers";
 import { BsGraphUp } from "react-icons/bs";
 
 // Added only to limit the requests during development
-const ENABLE_POLLING = false;
+const ENABLE_POLLING = true;
 
 interface Props {
   first: string;
@@ -76,7 +76,7 @@ export class Exchange extends Component<Props> {
 
     const timer = setInterval(() => {
       dispatch(handleExchangeRate());
-    }, 1000000); // should be 10000, but I increased it to save reqs for free account
+    }, 10000); // should be 10000, but I increased it to save reqs for free account
     this.setState({ timer });
   }
 
